@@ -23,35 +23,43 @@ export const EntrepreneurDashboard: React.FC = () => {
   const navigate = useNavigate();
   const [collaborationRequests, setCollaborationRequests] = useState<CollaborationRequest[]>([]);
   const [recommendedInvestors, setRecommendedInvestors] = useState(investors.slice(0, 3));
-  
+
+  // Store upcoming meetings in state so the list is always fresh on mount
+  const [upcomingMeetings, setUpcomingMeetings] = useState<Array<{
+    id: number; title: string; date: string; startTime: string; endTime: string;
+    participant: string; sentTo: string; status: string; notes: string;
+  }>>([]);
+
   useEffect(() => {
     if (user) {
       // Load collaboration requests
       const requests = getRequestsForEntrepreneur(user.id);
       setCollaborationRequests(requests);
+
+      // Re-read meetings from the module array every time this component mounts.
+      // This ensures we always show the latest data after navigating back from CalendarPage.
+      const filtered = (meetings as Array<{
+        id: number; title: string; date: string; startTime: string; endTime: string;
+        participant: string; sentTo: string; status: string; notes: string;
+      }>)
+        .filter(m => m.sentTo === user.id && m.status === 'accepted')
+        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+        .slice(0, 3);
+      setUpcomingMeetings(filtered);
     }
   }, [user]);
-  
+
   const handleRequestStatusUpdate = (requestId: string, status: 'accepted' | 'rejected') => {
-    setCollaborationRequests(prevRequests => 
-      prevRequests.map(req => 
+    setCollaborationRequests(prevRequests =>
+      prevRequests.map(req =>
         req.id === requestId ? { ...req, status } : req
       )
     );
   };
-  
+
   if (!user) return null;
 
   const pendingRequests = collaborationRequests.filter(req => req.status === 'pending');
-
-  // Get upcoming accepted meetings for this entrepreneur (sentTo matches user.id)
-  const upcomingMeetings = (meetings as Array<{
-    id: number; title: string; date: string; startTime: string; endTime: string;
-    participant: string; sentTo: string; status: string; notes: string;
-  }>)
-    .filter(m => m.sentTo === user.id && m.status === 'accepted')
-    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-    .slice(0, 3);
   
   return (
     <div className="space-y-6 animate-fade-in">

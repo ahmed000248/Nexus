@@ -24,16 +24,28 @@ export const InvestorDashboard: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
 
-  if (!user) return null;
-
-  // Get upcoming accepted meetings for this investor (sentBy matches user.id)
-  const upcomingMeetings = (meetings as Array<{
+  // Store upcoming meetings in state so the list is always fresh on mount
+  const [upcomingMeetings, setUpcomingMeetings] = useState<Array<{
     id: number; title: string; date: string; startTime: string; endTime: string;
     participant: string; sentBy: string; status: string; notes: string;
-  }>)
-    .filter(m => m.sentBy === user.id && m.status === 'accepted')
-    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-    .slice(0, 3);
+  }>>([]);
+
+  useEffect(() => {
+    if (user) {
+      // Re-read meetings from the module array every time this component mounts.
+      // This ensures we always show the latest data after navigating back from CalendarPage.
+      const filtered = (meetings as Array<{
+        id: number; title: string; date: string; startTime: string; endTime: string;
+        participant: string; sentBy: string; status: string; notes: string;
+      }>)
+        .filter(m => m.sentBy === user.id && m.status === 'accepted')
+        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+        .slice(0, 3);
+      setUpcomingMeetings(filtered);
+    }
+  }, [user]);
+
+  if (!user) return null;
   
   // Get collaboration requests sent by this investor
   const sentRequests = getRequestsFromInvestor(user.id);
