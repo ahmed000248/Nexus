@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Users, PieChart, Filter, Search, PlusCircle } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Users, PieChart, Filter, Search, PlusCircle, Calendar } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 import { Card, CardBody, CardHeader } from '../../components/ui/Card';
 import { Input } from '../../components/ui/Input';
@@ -11,12 +11,29 @@ import { Entrepreneur } from '../../types';
 import { entrepreneurs } from '../../data/users';
 import { getRequestsFromInvestor } from '../../data/collaborationRequests';
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import MeetingCard from '../../features/meetings/MeetingCard';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { meetings } from '../../features/meetings/dummyMeetings';
+
 export const InvestorDashboard: React.FC = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
-  
+
   if (!user) return null;
+
+  // Get upcoming accepted meetings for this investor (sentBy matches user.id)
+  const upcomingMeetings = (meetings as Array<{
+    id: number; title: string; date: string; startTime: string; endTime: string;
+    participant: string; sentBy: string; status: string; notes: string;
+  }>)
+    .filter(m => m.sentBy === user.id && m.status === 'accepted')
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+    .slice(0, 3);
   
   // Get collaboration requests sent by this investor
   const sentRequests = getRequestsFromInvestor(user.id);
@@ -147,6 +164,48 @@ export const InvestorDashboard: React.FC = () => {
         </Card>
       </div>
       
+      {/* ── Upcoming Meetings (Week 1 Feature) ─────────────────────── */}
+      <Card>
+        <CardHeader className="flex justify-between items-center">
+          <h2 className="text-lg font-medium text-gray-900">Upcoming Meetings</h2>
+          <button
+            onClick={() => navigate('/calendar')}
+            className="text-sm font-medium text-primary-600 hover:text-primary-500"
+          >
+            View Calendar →
+          </button>
+        </CardHeader>
+        <CardBody>
+          {upcomingMeetings.length > 0 ? (
+            <div className="space-y-3">
+              {upcomingMeetings.map((meeting: {
+                id: number; title: string; date: string; startTime: string;
+                endTime: string; participant: string; status: string; notes: string;
+              }) => (
+                <MeetingCard
+                  key={meeting.id}
+                  meeting={meeting}
+                  onViewCalendar={() => navigate('/calendar')}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-6">
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 mb-3">
+                <Calendar size={20} className="text-gray-400" />
+              </div>
+              <p className="text-gray-500 text-sm">No confirmed meetings yet.</p>
+              <button
+                onClick={() => navigate('/calendar')}
+                className="mt-2 text-sm text-primary-600 hover:text-primary-500 font-medium"
+              >
+                Schedule a Meeting →
+              </button>
+            </div>
+          )}
+        </CardBody>
+      </Card>
+
       {/* Entrepreneurs grid */}
       <div>
         <Card>

@@ -30,6 +30,11 @@ import { DealsPage } from './pages/deals/DealsPage';
 // Chat Pages
 import { ChatPage } from './pages/chat/ChatPage';
 
+// Calendar Feature (Week 1 — Meeting Scheduling)
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import CalendarPage from './features/meetings/CalendarPage';
+
 function App() {
   return (
     <AuthProvider>
@@ -90,6 +95,11 @@ function App() {
             <Route path=":userId" element={<ChatPage />} />
           </Route>
           
+          {/* Calendar Route (Week 1 Feature) */}
+          <Route path="/calendar" element={<DashboardLayout />}>
+            <Route index element={<CalendarPage />} />
+          </Route>
+
           {/* Redirect root to login */}
           <Route path="/" element={<Navigate to="/login" replace />} />
           

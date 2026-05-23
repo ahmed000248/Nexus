@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Users, Bell, Calendar, TrendingUp, AlertCircle, PlusCircle } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 import { Card, CardBody, CardHeader } from '../../components/ui/Card';
@@ -11,8 +11,16 @@ import { CollaborationRequest } from '../../types';
 import { getRequestsForEntrepreneur } from '../../data/collaborationRequests';
 import { investors } from '../../data/users';
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import MeetingCard from '../../features/meetings/MeetingCard';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { meetings } from '../../features/meetings/dummyMeetings';
+
 export const EntrepreneurDashboard: React.FC = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [collaborationRequests, setCollaborationRequests] = useState<CollaborationRequest[]>([]);
   const [recommendedInvestors, setRecommendedInvestors] = useState(investors.slice(0, 3));
   
@@ -33,8 +41,17 @@ export const EntrepreneurDashboard: React.FC = () => {
   };
   
   if (!user) return null;
-  
+
   const pendingRequests = collaborationRequests.filter(req => req.status === 'pending');
+
+  // Get upcoming accepted meetings for this entrepreneur (sentTo matches user.id)
+  const upcomingMeetings = (meetings as Array<{
+    id: number; title: string; date: string; startTime: string; endTime: string;
+    participant: string; sentTo: string; status: string; notes: string;
+  }>)
+    .filter(m => m.sentTo === user.id && m.status === 'accepted')
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+    .slice(0, 3);
   
   return (
     <div className="space-y-6 animate-fade-in">
@@ -68,7 +85,7 @@ export const EntrepreneurDashboard: React.FC = () => {
             </div>
           </CardBody>
         </Card>
-        
+
         <Card className="bg-secondary-50 border border-secondary-100">
           <CardBody>
             <div className="flex items-center">
@@ -84,7 +101,8 @@ export const EntrepreneurDashboard: React.FC = () => {
             </div>
           </CardBody>
         </Card>
-        
+
+        {/* This card now shows real meeting count from dummyMeetings */}
         <Card className="bg-accent-50 border border-accent-100">
           <CardBody>
             <div className="flex items-center">
@@ -93,7 +111,7 @@ export const EntrepreneurDashboard: React.FC = () => {
               </div>
               <div>
                 <p className="text-sm font-medium text-accent-700">Upcoming Meetings</p>
-                <h3 className="text-xl font-semibold text-accent-900">2</h3>
+                <h3 className="text-xl font-semibold text-accent-900">{upcomingMeetings.length}</h3>
               </div>
             </div>
           </CardBody>
@@ -114,6 +132,48 @@ export const EntrepreneurDashboard: React.FC = () => {
         </Card>
       </div>
       
+      {/* ── Upcoming Meetings (Week 1 Feature) ─────────────────────── */}
+      <Card>
+        <CardHeader className="flex justify-between items-center">
+          <h2 className="text-lg font-medium text-gray-900">Upcoming Meetings</h2>
+          <button
+            onClick={() => navigate('/calendar')}
+            className="text-sm font-medium text-primary-600 hover:text-primary-500"
+          >
+            View Calendar →
+          </button>
+        </CardHeader>
+        <CardBody>
+          {upcomingMeetings.length > 0 ? (
+            <div className="space-y-3">
+              {upcomingMeetings.map((meeting: {
+                id: number; title: string; date: string; startTime: string;
+                endTime: string; participant: string; status: string; notes: string;
+              }) => (
+                <MeetingCard
+                  key={meeting.id}
+                  meeting={meeting}
+                  onViewCalendar={() => navigate('/calendar')}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-6">
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 mb-3">
+                <Calendar size={20} className="text-gray-400" />
+              </div>
+              <p className="text-gray-500 text-sm">No confirmed meetings yet.</p>
+              <button
+                onClick={() => navigate('/calendar')}
+                className="mt-2 text-sm text-primary-600 hover:text-primary-500 font-medium"
+              >
+                Go to Calendar →
+              </button>
+            </div>
+          )}
+        </CardBody>
+      </Card>
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Collaboration requests */}
         <div className="lg:col-span-2 space-y-4">

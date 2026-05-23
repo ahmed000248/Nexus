@@ -1,3 +1,40 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Global base tweaks for a cleaner look */
+@layer base {
+  html {
+    font-family: 'Poppins', 'Inter var', sans-serif;
+  }
+
+  body {
+    background-color: #f8fafc;
+    color: #1f2937;
+  }
+
+  /* Smooth scroll for the whole app */
+  * {
+    scroll-behavior: smooth;
+  }
+
+  /* Better input focus outline */
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+  }
+}
+
+/* Utility: soft card shadow */
+@layer utilities {
+  .card-shadow {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.07), 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  .card-shadow-hover:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+}
