@@ -1,0 +1,666 @@
+/* ============================================================
+   documentChamber.css
+   Styles for the Document Processing Chamber feature.
+   Professional SaaS dashboard look using the Nexus blue + white theme.
+   ============================================================ */
+
+/* ── Page layout ────────────────────────────────────────── */
+.dc-page {
+  padding: 24px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.dc-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.dc-page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin: 0 0 4px 0;
+}
+
+.dc-page-subtitle {
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+/* ── Upload new document button (header CTA) ────────────── */
+.dc-btn-upload-new {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.dc-btn-upload-new:hover {
+  background: #1d4ed8;
+}
+
+/* ── Summary stats row ──────────────────────────────────── */
+.dc-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .dc-stats-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.dc-stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.dc-stat-number {
+  display: block;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 4px;
+}
+
+.dc-stat-label {
+  font-size: 0.74rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* Status-specific number colors */
+.dc-stat-draft .dc-stat-number { color: #6b7280; }
+.dc-stat-review .dc-stat-number { color: #d97706; }
+.dc-stat-signed .dc-stat-number { color: #16a34a; }
+
+/* ── Upload form section ────────────────────────────────── */
+.dc-upload-form {
+  background: white;
+  border: 2px dashed #93c5fd;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.dc-upload-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e3a8a;
+  margin: 0 0 4px 0;
+}
+
+.dc-upload-subtitle {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin: 0 0 16px 0;
+}
+
+/* ── Shared form field styles ───────────────────────────── */
+.dc-form-group {
+  margin-bottom: 14px;
+}
+
+.dc-form-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 5px;
+}
+
+.dc-form-input {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.875rem;
+  color: #1f2937;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.18s, box-shadow 0.18s;
+  background: #fff;
+}
+
+.dc-form-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.dc-file-input {
+  width: 100%;
+  padding: 8px;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.8rem;
+  cursor: pointer;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+/* Selected file info bar */
+.dc-file-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  color: #1e40af;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.dc-file-size {
+  color: #6b7280;
+}
+
+.dc-error {
+  color: #dc2626;
+  font-size: 0.8rem;
+  margin: 0 0 10px 0;
+}
+
+.dc-upload-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+/* ── Filter tabs ────────────────────────────────────────── */
+.dc-filter-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.dc-filter-tab {
+  padding: 7px 18px;
+  border-radius: 20px;
+  border: 1.5px solid #e5e7eb;
+  background: white;
+  color: #6b7280;
+  font-size: 0.8rem;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.dc-filter-tab:hover {
+  border-color: #93c5fd;
+  color: #2563eb;
+}
+
+.dc-filter-tab.dc-filter-active {
+  background: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
+/* ── Document card ──────────────────────────────────────── */
+.dc-card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 18px 20px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.dc-card:hover {
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.1);
+  transform: translateY(-1px);
+}
+
+.dc-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.dc-file-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.dc-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.dc-card-title {
+  font-size: 0.94rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 4px 0;
+  word-break: break-word;
+}
+
+.dc-card-meta {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0 0 2px 0;
+}
+
+.dc-card-date {
+  font-size: 0.72rem;
+  color: #9ca3af;
+  margin: 0;
+}
+
+/* ── Status badges ──────────────────────────────────────── */
+.dc-status-badge {
+  font-size: 0.71rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 12px;
+  flex-shrink: 0;
+  align-self: flex-start;
+  white-space: nowrap;
+}
+
+/* Draft = gray */
+.dc-badge-draft {
+  background: #f3f4f6;
+  color: #6b7280;
+  border: 1px solid #d1d5db;
+}
+
+/* In Review = yellow */
+.dc-badge-review {
+  background: #fef9c3;
+  color: #854d0e;
+  border: 1px solid #fde047;
+}
+
+/* Signed = green */
+.dc-badge-signed {
+  background: #dcfce7;
+  color: #14532d;
+  border: 1px solid #86efac;
+}
+
+/* ── Card action buttons ─────────────────────────────────── */
+.dc-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Base button style shared across all action buttons */
+.dc-btn {
+  padding: 7px 14px;
+  border-radius: 7px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s, background 0.15s;
+}
+
+.dc-btn:hover {
+  opacity: 0.88;
+}
+
+.dc-btn-preview {
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+}
+
+.dc-btn-sign {
+  background: #2563eb;
+  color: white;
+}
+
+.dc-btn-delete {
+  background: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fca5a5;
+}
+
+.dc-btn-cancel {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+}
+
+.dc-btn-upload {
+  background: #2563eb;
+  color: white;
+}
+
+/* Status change dropdown */
+.dc-status-select {
+  padding: 6px 10px;
+  border-radius: 7px;
+  border: 1.5px solid #d1d5db;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.78rem;
+  color: #374151;
+  background: white;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.dc-status-select:focus {
+  border-color: #2563eb;
+}
+
+/* ── Signature preview inside the card ──────────────────── */
+.dc-signature-preview {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.dc-signature-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #14532d;
+  margin: 0;
+}
+
+.dc-signature-img {
+  height: 30px;
+  width: auto;
+  max-width: 120px;
+  border: 1px solid #bbf7d0;
+  border-radius: 4px;
+  background: white;
+}
+
+/* ── Empty state ─────────────────────────────────────────── */
+.dc-empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+}
+
+.dc-empty-icon {
+  font-size: 2.5rem;
+  margin: 0 0 12px 0;
+}
+
+.dc-empty-text {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 6px 0;
+}
+
+.dc-empty-hint {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  margin: 0;
+}
+
+/* ── PDF Preview Modal ──────────────────────────────────── */
+.dc-preview-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(2px);
+}
+
+.dc-preview-modal {
+  background: white;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 800px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.22);
+}
+
+.dc-preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
+  flex-shrink: 0;
+}
+
+.dc-preview-header h3 {
+  font-size: 0.94rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.dc-preview-header button {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+
+.dc-preview-header button:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.dc-preview-iframe {
+  flex: 1;
+  width: 100%;
+  border: none;
+  min-height: 500px;
+}
+
+/* ── Signature Modal ────────────────────────────────────── */
+.sig-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(2px);
+}
+
+.sig-modal {
+  background: white;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 520px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.22);
+  overflow: hidden;
+  animation: sigModalIn 0.22s ease-out;
+}
+
+@keyframes sigModalIn {
+  from { opacity: 0; transform: translateY(14px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+.sig-modal-header {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sig-modal-header h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.sig-close-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.sig-close-btn:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.sig-doc-info {
+  padding: 16px 24px 0;
+}
+
+.sig-doc-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 6px 0;
+  word-break: break-word;
+}
+
+.sig-doc-note {
+  font-size: 0.78rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.sig-canvas-area {
+  padding: 16px 24px;
+}
+
+.sig-canvas-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #374151;
+  margin: 0 0 8px 0;
+}
+
+/* Canvas wrapper constrains the canvas on small screens */
+.sig-canvas-wrapper {
+  border: 2px solid #d1d5db;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fafafa;
+}
+
+/* Make the canvas fill the wrapper width */
+.sig-canvas {
+  display: block !important;
+  width: 100% !important;
+  touch-action: none;
+}
+
+.sig-canvas-hint {
+  font-size: 0.7rem;
+  color: #9ca3af;
+  margin: 6px 0 0 0;
+  text-align: center;
+}
+
+.sig-modal-footer {
+  padding: 14px 24px;
+  background: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .dc-page {
+    padding: 16px;
+  }
+
+  .dc-page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dc-card-header {
+    flex-wrap: wrap;
+  }
+
+  .dc-card-actions {
+    justify-content: flex-start;
+  }
+
+  .sig-modal,
+  .dc-preview-modal {
+    max-width: 100%;
+    border-radius: 10px;
+  }
+
+  .sig-modal-footer,
+  .dc-upload-actions {
+    justify-content: stretch;
+  }
+
+  .sig-modal-footer .dc-btn,
+  .dc-upload-actions .dc-btn {
+    flex: 1;
+    text-align: center;
+  }
+}

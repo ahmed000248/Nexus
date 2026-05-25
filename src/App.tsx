@@ -35,6 +35,14 @@ import { ChatPage } from './pages/chat/ChatPage';
 // @ts-ignore
 import CalendarPage from './features/meetings/CalendarPage';
 
+// Week 2 Features
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import VideoCallPage from './features/videoCall/VideoCallPage';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import DocumentPage from './features/documentChamber/DocumentPage';
+
 function App() {
   return (
     <AuthProvider>
@@ -98,6 +106,16 @@ function App() {
           {/* Calendar Route (Week 1 Feature) */}
           <Route path="/calendar" element={<DashboardLayout />}>
             <Route index element={<CalendarPage />} />
+          </Route>
+
+          {/* Video Calls Route (Week 2 Feature — Milestone 3) */}
+          <Route path="/video-calls" element={<DashboardLayout />}>
+            <Route index element={<VideoCallPage />} />
+          </Route>
+
+          {/* Document Chamber Route (Week 2 Feature — Milestone 4) */}
+          <Route path="/document-chamber" element={<DashboardLayout />}>
+            <Route index element={<DocumentPage />} />
           </Route>
 
           {/* Redirect root to login */}

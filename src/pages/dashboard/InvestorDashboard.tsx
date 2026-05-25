@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Users, PieChart, Filter, Search, PlusCircle, Calendar } from 'lucide-react';
+import { Users, PieChart, Filter, Search, PlusCircle, Calendar, Video, FileCheck } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 import { Card, CardBody, CardHeader } from '../../components/ui/Card';
 import { Input } from '../../components/ui/Input';
@@ -17,6 +17,14 @@ import MeetingCard from '../../features/meetings/MeetingCard';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { meetings } from '../../features/meetings/dummyMeetings';
+
+// Week 2 dummy data for the dashboard quick-access cards
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { recentCalls, scheduledCalls } from '../../features/videoCall/dummyCallData';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import dummyDocuments from '../../features/documentChamber/dummyDocuments';
 
 export const InvestorDashboard: React.FC = () => {
   const { user } = useAuth();
@@ -217,6 +225,77 @@ export const InvestorDashboard: React.FC = () => {
           )}
         </CardBody>
       </Card>
+
+      {/* ── Week 2 Quick Access Cards ──────────────────────────── */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        {/* Video Calls quick-access card */}
+        <Card>
+          <CardBody>
+            <div className="flex items-center mb-4">
+              <div className="p-3 bg-blue-100 rounded-full mr-4">
+                <Video size={20} className="text-blue-700" />
+              </div>
+              <div>
+                <h3 className="text-base font-semibold text-gray-900">Video Calls</h3>
+                <p className="text-sm text-gray-500">Connect with entrepreneurs face-to-face</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-3 mb-4">
+              <div className="bg-gray-50 rounded-lg p-3 text-center">
+                <p className="text-xl font-bold text-gray-900">{recentCalls.length}</p>
+                <p className="text-xs text-gray-500 mt-1">Recent Calls</p>
+              </div>
+              <div className="bg-gray-50 rounded-lg p-3 text-center">
+                <p className="text-xl font-bold text-gray-900">{scheduledCalls.length}</p>
+                <p className="text-xs text-gray-500 mt-1">Scheduled</p>
+              </div>
+            </div>
+            <Link to="/video-calls">
+              <Button variant="outline" fullWidth>Open Video Calls →</Button>
+            </Link>
+          </CardBody>
+        </Card>
+
+        {/* Document Chamber quick-access card */}
+        <Card>
+          <CardBody>
+            <div className="flex items-center mb-4">
+              <div className="p-3 bg-green-100 rounded-full mr-4">
+                <FileCheck size={20} className="text-green-700" />
+              </div>
+              <div>
+                <h3 className="text-base font-semibold text-gray-900">Document Chamber</h3>
+                <p className="text-sm text-gray-500">Investment contracts &amp; agreements</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-3 gap-3 mb-4">
+              <div className="bg-gray-50 rounded-lg p-3 text-center">
+                <p className="text-xl font-bold text-yellow-600">
+                  {dummyDocuments.filter((d: { status: string }) => d.status === 'In Review').length}
+                </p>
+                <p className="text-xs text-gray-500 mt-1">In Review</p>
+              </div>
+              <div className="bg-gray-50 rounded-lg p-3 text-center">
+                <p className="text-xl font-bold text-green-600">
+                  {dummyDocuments.filter((d: { status: string }) => d.status === 'Signed').length}
+                </p>
+                <p className="text-xs text-gray-500 mt-1">Signed</p>
+              </div>
+              <div className="bg-gray-50 rounded-lg p-3 text-center">
+                <p className="text-xl font-bold text-gray-400">
+                  {dummyDocuments.filter((d: { status: string }) => d.status === 'Draft').length}
+                </p>
+                <p className="text-xs text-gray-500 mt-1">Drafts</p>
+              </div>
+            </div>
+            <Link to="/document-chamber">
+              <Button variant="outline" fullWidth>Open Documents →</Button>
+            </Link>
+          </CardBody>
+        </Card>
+
+      </div>
 
       {/* Entrepreneurs grid */}
       <div>
