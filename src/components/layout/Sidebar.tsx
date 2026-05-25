@@ -3,7 +3,8 @@ import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import {
   Home, Building2, CircleDollarSign, Users, MessageCircle,
-  Bell, FileText, Settings, HelpCircle, CalendarDays, Video, FileCheck
+  Bell, FileText, Settings, HelpCircle, CalendarDays, Video, FileCheck,
+  CreditCard, ShieldCheck,
 } from 'lucide-react';
 
 interface SidebarItemProps {
@@ -43,6 +44,7 @@ export const Sidebar: React.FC = () => {
     { to: '/calendar', icon: <CalendarDays size={20} />, text: 'Calendar' },
     { to: '/video-calls', icon: <Video size={20} />, text: 'Video Calls' },
     { to: '/document-chamber', icon: <FileCheck size={20} />, text: 'Doc Chamber' },
+    { to: '/payments', icon: <CreditCard size={20} />, text: 'Payments' },
     { to: '/messages', icon: <MessageCircle size={20} />, text: 'Messages' },
     { to: '/notifications', icon: <Bell size={20} />, text: 'Notifications' },
     { to: '/documents', icon: <FileText size={20} />, text: 'Documents' },
@@ -55,6 +57,7 @@ export const Sidebar: React.FC = () => {
     { to: '/calendar', icon: <CalendarDays size={20} />, text: 'Calendar' },
     { to: '/video-calls', icon: <Video size={20} />, text: 'Video Calls' },
     { to: '/document-chamber', icon: <FileCheck size={20} />, text: 'Doc Chamber' },
+    { to: '/payments', icon: <CreditCard size={20} />, text: 'Payments' },
     { to: '/messages', icon: <MessageCircle size={20} />, text: 'Messages' },
     { to: '/notifications', icon: <Bell size={20} />, text: 'Notifications' },
     { to: '/deals', icon: <FileText size={20} />, text: 'Deals' },
@@ -64,6 +67,7 @@ export const Sidebar: React.FC = () => {
   
   // Common items at the bottom
   const commonItems = [
+    { to: '/security', icon: <ShieldCheck size={20} />, text: 'Security' },
     { to: '/settings', icon: <Settings size={20} />, text: 'Settings' },
     { to: '/help', icon: <HelpCircle size={20} />, text: 'Help & Support' },
   ];

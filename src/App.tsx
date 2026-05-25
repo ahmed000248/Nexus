@@ -43,6 +43,14 @@ import VideoCallPage from './features/videoCall/VideoCallPage';
 // @ts-ignore
 import DocumentPage from './features/documentChamber/DocumentPage';
 
+// Week 3 Features
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import PaymentsPage from './features/payments/PaymentsPage';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import SecurityPage from './features/security/SecurityPage';
+
 function App() {
   return (
     <AuthProvider>
@@ -116,6 +124,21 @@ function App() {
           {/* Document Chamber Route (Week 2 Feature — Milestone 4) */}
           <Route path="/document-chamber" element={<DashboardLayout />}>
             <Route index element={<DocumentPage />} />
+          </Route>
+
+          {/* Week 3 Features */}
+          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+          {/* @ts-ignore */}
+          <Route path="/payments" element={<DashboardLayout />}>
+            {/* @ts-ignore */}
+            <Route index element={<PaymentsPage />} />
+          </Route>
+
+          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+          {/* @ts-ignore */}
+          <Route path="/security" element={<DashboardLayout />}>
+            {/* @ts-ignore */}
+            <Route index element={<SecurityPage />} />
           </Route>
 
           {/* Redirect root to login */}
